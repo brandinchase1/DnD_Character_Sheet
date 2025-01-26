@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="character_sheet_template.js" defer></script>
+    <script src="dnd.js" defer></script>
+    <title>D&D Character Sheet Creator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <link rel="stylesheet" href="dnd.css">
+</head>
+<body>
+    <header>
+        <h1>D&D Character Sheet Creator</h1>
+    </header>
+
+    <main>
+        <form id="character-form">
+            <section>
+                <h2 class="collapsible">Basic Information</h2>
+                <div class="collapsible-content">
+                    <div class="inline">
+                        <label for="name">Character Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="inline">
+                        <label for="class">Class & Level:</label>
+                        <input type="text" id="class" name="class" required>
+                        <input type="number" id="level" name="level" min="1" max="20" required>
+                    </div>
+
+                    <div class="inline">
+                        <label for="race">Race:</label>
+                        <input type="text" id="race" name="race" required>
+
+                        <label for="alignment">Alignment:</label>
+                        <input type="text" id="alignment" name="alignment">
+                    </div>
+
+                    <label for="background">Background:</label>
+                    <input type="text" id="background" name="background">
+
+                    <label for="xp">Experience Points:</label>
+                    <input type="number" id="xp" name="xp" min="0">
+            </div>
+            </section>
+
+            <section>
+                <h2 class="collapsible">Ability Scores</h2>
+                <div class="collapsible-content">
+                    <div>
+                        <label>Strength:
+                            <input type="number" id="strength" name="strength" min="1" max="20" required>
+                        </label>
+                        <label>Dexterity:
+                            <input type="number" id="dexterity" name="dexterity" min="1" max="20" required>
+                        </label>
+                        <label>Constitution:
+                            <input type="number" id="constitution" name="constitution" min="1" max="20" required>
+                        </label>
+                        <label>Intelligence:
+                            <input type="number" id="intelligence" name="intelligence" min="1" max="20" required>
+                        </label>
+                        <label>Wisdom:
+                            <input type="number" id="wisdom" name="wisdom" min="1" max="20" required>
+                        </label>
+                        <label>Charisma:
+                            <input type="number" id="charisma" name="charisma" min="1" max="20" required>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="collapsible">Skills</h2>
+                <div class="collapsible-content">
+                        <div class="skills-grid" id="skills-grid">
+                        <!-- Skill boxes will be dynamically populated -->
+                    </div>
+                </div>
+            </section>
+
+
+            <section>
+                <h2 class="collapsible">Saving Throws & Skills</h2>
+                <div class="collapsible-content">
+                    <div class="abilities">
+                        <label>Proficiency Bonus:
+                            <input type="number" id="proficiency" name="proficiency" min="1" max="10">
+                        </label>
+
+                        <label>Passive Perception:
+                            <input type="number" id="passive-perception" name="passive-perception" min="1" max="30">
+                        </label>
+                    </div>
+
+                    <label>Skills:</label>
+                    <textarea id="skills" name="skills" rows="5" placeholder="List skills and proficiencies..."></textarea>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="collapsible">Hit Points</h2>
+                <div class="collapsible-content">
+                    <label>Maximum HP:
+                        <input type="number" id="max-hp" name="max-hp" required>
+                    </label>
+
+                    <label>Current HP:
+                        <input type="number" id="current-hp" name="current-hp">
+                    </label>
+
+                    <label>Temporary HP:
+                        <input type="number" id="temp-hp" name="temp-hp">
+                    </label>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="collapsible">Attacks & Equipment</h2>
+                <div class="collapsible-content">
+                    <label>Attacks & Spellcasting:</label>
+                    <textarea id="attacks" name="attacks" rows="5" placeholder="List attacks, spells, and bonuses..."></textarea>
+
+                    <label>Equipment:</label>
+                    <textarea id="equipment" name="equipment" rows="5" placeholder="List all equipment..."></textarea>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="collapsible">Traits & Backstory</h2>
+                <div class="collapsible-content">
+                    <label>Personality Traits:</label>
+                    <textarea id="traits" name="traits" rows="3"></textarea>
+
+                    <label>Ideals:</label>
+                    <textarea id="ideals" name="ideals" rows="3"></textarea>
+
+                    <label>Bonds:</label>
+                    <textarea id="bonds" name="bonds" rows="3"></textarea>
+
+                    <label>Flaws:</label>
+                    <textarea id="flaws" name="flaws" rows="3"></textarea>
+
+                    <label>Backstory:</label>
+                    <textarea id="backstory" name="backstory" rows="5"></textarea>
+                </div>
+            </section>
+
+            <div id="button_container">
+                <button type="button" id="save-button">Save Character</button>
+                <button type="button" id="generate-pdf">Generate PDF</button>
+            </div>
+        </form>
+
+        <section id="character-list">
+            <h2 class="collapsible">Saved Characters</h2>
+                <div class="collapsible-content">
+                    <ul id="characters"></ul>
+                </div>
+        </section>
+    </main>
+
+</body>
+</html>
