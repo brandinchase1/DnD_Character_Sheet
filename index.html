@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="options.js" defer></script>
     <script src="character_sheet_template.js" defer></script>
     <script src="dnd.js" defer></script>
-    <title>D&D Character Sheet Creator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <title>D&D Character Sheet Creator</title>
     <link rel="stylesheet" href="dnd.css">
 </head>
 <body>
@@ -20,76 +21,108 @@
                 <h2 class="collapsible">Basic Information</h2>
                 <div class="collapsible-content">
                     <div class="inline">
-                        <label for="name">Character Name:</label>
-                        <input type="text" id="name" name="name" required>
+                        <label for="character-name">Character Name:</label>
+                        <input type="text" id="character-name" name="character-name" required>
+
+                        <label for="player-name">Player Name:</label>
+                        <input type="text" id="player-name" name="player-name" required>
                     </div>
 
                     <div class="inline">
-                        <label for="class">Class & Level:</label>
-                        <input type="text" id="class" name="class" required>
-                        <input type="number" id="level" name="level" min="1" max="20" required>
+                        <label for="class">Class & Levels:</label>
+                        <select id="class-selector"></select>
+                        <button type="button" id="add-class">Add Class</button>
+                        <div id="proficiency-container">
+                            <label>Proficiency Bonus:</label>
+                            <span id="proficiency-bonus">+2</span>
+                        </div>
+                    </div>
+                    
+                    <div class="inline">
+                        <div id="class-container" class="pill-container">
+                            <!-- Pills for classes will appear here -->
+                        </div>
                     </div>
 
                     <div class="inline">
-                        <label for="race">Race:</label>
-                        <input type="text" id="race" name="race" required>
+                        <label for="species">Species:</label>
+                        <select id="species-selector"></select>
 
+                        <label for="background">Background:</label>
+                        <select id="background-selector"></select>
+
+
+                    </div>
+
+                    <div class="inline">
                         <label for="alignment">Alignment:</label>
-                        <input type="text" id="alignment" name="alignment">
+                        <select id="alignment-selector"></select>
+    
+                        <label for="xp">Experience Points:</label>
+                        <input type="number" id="xp" name="xp" min="0">
                     </div>
 
-                    <label for="background">Background:</label>
-                    <input type="text" id="background" name="background">
-
-                    <label for="xp">Experience Points:</label>
-                    <input type="number" id="xp" name="xp" min="0">
             </div>
             </section>
 
             <section>
                 <h2 class="collapsible">Ability Scores</h2>
-                <div class="collapsible-content">
-                    <div>
-                        <label>Strength:
-                            <input type="number" id="strength" name="strength" min="1" max="20" required>
-                        </label>
-                        <label>Dexterity:
-                            <input type="number" id="dexterity" name="dexterity" min="1" max="20" required>
-                        </label>
-                        <label>Constitution:
-                            <input type="number" id="constitution" name="constitution" min="1" max="20" required>
-                        </label>
-                        <label>Intelligence:
-                            <input type="number" id="intelligence" name="intelligence" min="1" max="20" required>
-                        </label>
-                        <label>Wisdom:
-                            <input type="number" id="wisdom" name="wisdom" min="1" max="20" required>
-                        </label>
-                        <label>Charisma:
-                            <input type="number" id="charisma" name="charisma" min="1" max="20" required>
-                        </label>
-                    </div>
-                </div>
-            </section>
+                    <div class="collapsible-content">
+                        <div class="ability-grid">
+                            <div class="ability">
+                                <div id="strength-mod" class="ability-mod">+0</div>
+                                <label for="strength">Strength</label>
+                                <input type="number" id="strength" class="ability-score" name="strength" min="1" max="30" required>
+                                <div id="strength-saving" class="saving-throw">Saving Throw: +0</div>
+                            </div>
+                            <div class="ability">
+                                <div id="dexterity-mod" class="ability-mod">+0</div>
+                                <label for="dexterity">Dexterity</label>
+                                <input type="number" id="dexterity" class="ability-score" name="dexterity" min="1" max="30" required>
+                                <div id="dexterity-saving" class="saving-throw">Saving Throw: +0</div>
+                            </div>
+                            <div class="ability">
+                                <div id="constitution-mod" class="ability-mod">+0</div>
+                                <label for="constitution">Constitution</label>
+                                <input type="number" id="constitution" class="ability-score" name="constitution" min="1" max="30" required>
+                                <div id="constitution-saving" class="saving-throw">Saving Throw: +0</div>
+                            </div>
+                            <div class="ability">
+                                <div id="intelligence-mod" class="ability-mod">+0</div>
+                                <label for="intelligence">Intelligence</label>
+                                <input type="number" id="intelligence" class="ability-score" name="intelligence" min="1" max="30" required>
+                                <div id="intelligence-saving" class="saving-throw">Saving Throw: +0</div>
+                            </div>
+                            <div class="ability">
+                                <div id="wisdom-mod" class="ability-mod">+0</div>
+                                <label for="wisdom">Wisdom</label>
+                                <input type="number" id="wisdom" class="ability-score" name="wisdom" min="1" max="30" required>
+                                <div id="wisdom-saving" class="saving-throw">Saving Throw: +0</div>
+                            </div>
+                            <div class="ability">
+                                <div id="charisma-mod" class="ability-mod">+0</div>
+                                <label for="charisma">Charisma</label>
+                                <input type="number" id="charisma" class="ability-score" name="charisma" min="1" max="30" required>
+                                <div id="charisma-saving" class="saving-throw">Saving Throw: +0</div>
+                            </div>
+                        </div>
 
-            <section>
-                <h2 class="collapsible">Skills</h2>
-                <div class="collapsible-content">
+                        <h3>Skills</h3>
                         <div class="skills-grid" id="skills-grid">
-                        <!-- Skill boxes will be dynamically populated -->
+                            <!-- Skill boxes will be dynamically populated -->
+                            </div>
                     </div>
-                </div>
             </section>
 
-
             <section>
-                <h2 class="collapsible">Saving Throws & Skills</h2>
+                <h2 class="collapsible">Proficiencies</h2>
                 <div class="collapsible-content">
+
                     <div class="abilities">
                         <label>Proficiency Bonus:
                             <input type="number" id="proficiency" name="proficiency" min="1" max="10">
                         </label>
-
+                    
                         <label>Passive Perception:
                             <input type="number" id="passive-perception" name="passive-perception" min="1" max="30">
                         </label>
@@ -101,7 +134,7 @@
             </section>
 
             <section>
-                <h2 class="collapsible">Hit Points</h2>
+                <h2 class="collapsible">Combat</h2>
                 <div class="collapsible-content">
                     <label>Maximum HP:
                         <input type="number" id="max-hp" name="max-hp" required>
@@ -114,23 +147,61 @@
                     <label>Temporary HP:
                         <input type="number" id="temp-hp" name="temp-hp">
                     </label>
+                    <label>Initiative:
+                        <input type="number" id="initiative" name="initiative">
+                    </label>
+                    <label>Armor Class:
+                        <input type="number" id="armor-class" name="armor-class">
+                    </label>
+                    <label>Hit Dice:
+                        <input type="number" id="hit-dice" name="hit-dice">
+                    </label>
+                    <label>Death Saves:
+                        <input type="number" id="death-saves" name="death-saves">
+                    </label>
+                    <label>Attacks & Spellcasting:</label>
+                    <textarea id="attacks" name="attacks" rows="5" placeholder="List attacks, spells, and bonuses..."></textarea>
                 </div>
             </section>
 
             <section>
-                <h2 class="collapsible">Attacks & Equipment</h2>
+                <h2 class="collapsible">Equipment</h2>
                 <div class="collapsible-content">
-                    <label>Attacks & Spellcasting:</label>
-                    <textarea id="attacks" name="attacks" rows="5" placeholder="List attacks, spells, and bonuses..."></textarea>
-
                     <label>Equipment:</label>
                     <textarea id="equipment" name="equipment" rows="5" placeholder="List all equipment..."></textarea>
+
+                    <label>Coins:</label>
                 </div>
             </section>
 
             <section>
                 <h2 class="collapsible">Traits & Backstory</h2>
                 <div class="collapsible-content">
+                    <label>Character Apperance:</label>
+                    <img>
+
+                    <label>Hair:</label>
+                    <textarea></textarea>
+
+                    <label>Age:</label>
+                    <textarea></textarea>
+
+                    <label>Height:</label>
+                    <textarea></textarea>
+                    
+                    <label>Weight:</label>
+                    <textarea></textarea>
+                    
+                    <label>Eyes:</label>
+                    <textarea></textarea>
+
+                    <label>Skin:</label>
+                    <textarea></textarea>
+
+                    <label>Hair:</label>
+                    <textarea></textarea>
+
+
                     <label>Personality Traits:</label>
                     <textarea id="traits" name="traits" rows="3"></textarea>
 
@@ -154,12 +225,11 @@
             </div>
         </form>
 
-        <section id="character-list">
-            <h2 class="collapsible">Saved Characters</h2>
-                <div class="collapsible-content">
-                    <ul id="characters"></ul>
-                </div>
-        </section>
+        <div id="image-selector-container">
+            <img id="current-image" src= "https://color-hex.org/colors/f4f4f4.png", alt="Current Background">
+            <div id="image-selector">
+            </div>
+        </div>
     </main>
 
 </body>
