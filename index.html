@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="options.js" defer></script>
-    <script src="character_sheet_template.js" defer></script>
+    <script src="sheet1_template.js" defer></script>
+    <script src="sheet2_template.js" defer></script>
     <script src="dnd.js" defer></script>
+    <script src="save_file.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <title>D&D Character Sheet Creator</title>
     <link rel="stylesheet" href="dnd.css">
@@ -22,10 +24,10 @@
                 <div class="collapsible-content">
                     <div class="inline">
                         <label for="character-name">Character Name:</label>
-                        <input type="text" id="character-name" name="character-name" required>
+                        <input type="text" id="character-name" name="character-name">
 
                         <label for="player-name">Player Name:</label>
-                        <input type="text" id="player-name" name="player-name" required>
+                        <input type="text" id="player-name" name="player-name">
                     </div>
 
                     <div class="inline">
@@ -69,42 +71,7 @@
                 <h2 class="collapsible">Ability Scores</h2>
                     <div class="collapsible-content">
                         <div class="ability-grid">
-                            <div class="ability">
-                                <div id="strength-mod" class="ability-mod">+0</div>
-                                <label for="strength">Strength</label>
-                                <input type="number" id="strength" class="ability-score" name="strength" min="1" max="30" required>
-                                <div id="strength-saving" class="saving-throw">Saving Throw: +0</div>
-                            </div>
-                            <div class="ability">
-                                <div id="dexterity-mod" class="ability-mod">+0</div>
-                                <label for="dexterity">Dexterity</label>
-                                <input type="number" id="dexterity" class="ability-score" name="dexterity" min="1" max="30" required>
-                                <div id="dexterity-saving" class="saving-throw">Saving Throw: +0</div>
-                            </div>
-                            <div class="ability">
-                                <div id="constitution-mod" class="ability-mod">+0</div>
-                                <label for="constitution">Constitution</label>
-                                <input type="number" id="constitution" class="ability-score" name="constitution" min="1" max="30" required>
-                                <div id="constitution-saving" class="saving-throw">Saving Throw: +0</div>
-                            </div>
-                            <div class="ability">
-                                <div id="intelligence-mod" class="ability-mod">+0</div>
-                                <label for="intelligence">Intelligence</label>
-                                <input type="number" id="intelligence" class="ability-score" name="intelligence" min="1" max="30" required>
-                                <div id="intelligence-saving" class="saving-throw">Saving Throw: +0</div>
-                            </div>
-                            <div class="ability">
-                                <div id="wisdom-mod" class="ability-mod">+0</div>
-                                <label for="wisdom">Wisdom</label>
-                                <input type="number" id="wisdom" class="ability-score" name="wisdom" min="1" max="30" required>
-                                <div id="wisdom-saving" class="saving-throw">Saving Throw: +0</div>
-                            </div>
-                            <div class="ability">
-                                <div id="charisma-mod" class="ability-mod">+0</div>
-                                <label for="charisma">Charisma</label>
-                                <input type="number" id="charisma" class="ability-score" name="charisma" min="1" max="30" required>
-                                <div id="charisma-saving" class="saving-throw">Saving Throw: +0</div>
-                            </div>
+                            <!-- Ability boxes will be dynamically populated -->
                         </div>
 
                         <h3>Skills</h3>
@@ -117,93 +84,161 @@
             <section>
                 <h2 class="collapsible">Proficiencies</h2>
                 <div class="collapsible-content">
+                    <label>Armor:</label>
+                    <textarea placeholder="List armor proficiencies..."></textarea>
 
-                    <div class="abilities">
-                        <label>Proficiency Bonus:
-                            <input type="number" id="proficiency" name="proficiency" min="1" max="10">
-                        </label>
+                    <label>Weapons:</label>
+                    <textarea placeholder="List weapon proficiencies..."></textarea>
+
+                    <label>Tools:</label>
+                    <textarea placeholder="List tool proficiencies..."></textarea>
+
+                    <label>Languages:</label>
+                    <textarea placeholder="List language proficiencies..."></textarea>
                     
-                        <label>Passive Perception:
-                            <input type="number" id="passive-perception" name="passive-perception" min="1" max="30">
-                        </label>
-                    </div>
-
-                    <label>Skills:</label>
-                    <textarea id="skills" name="skills" rows="5" placeholder="List skills and proficiencies..."></textarea>
+                    <label>Other:</label>
+                    <textarea placeholder="List other proficiencies..."></textarea>
                 </div>
             </section>
 
             <section>
                 <h2 class="collapsible">Combat</h2>
                 <div class="collapsible-content">
-                    <label>Maximum HP:
-                        <input type="number" id="max-hp" name="max-hp" required>
-                    </label>
+                    <div class="inline">
+                        <label>Current HP:
+                            <input type="number" id="current-hp" name="current-hp">
+                        </label>
 
-                    <label>Current HP:
-                        <input type="number" id="current-hp" name="current-hp">
-                    </label>
+                        <label>Maximum HP:
+                            <input type="number" id="max-hp" name="max-hp">
+                        </label>
 
-                    <label>Temporary HP:
-                        <input type="number" id="temp-hp" name="temp-hp">
-                    </label>
-                    <label>Initiative:
-                        <input type="number" id="initiative" name="initiative">
-                    </label>
-                    <label>Armor Class:
-                        <input type="number" id="armor-class" name="armor-class">
-                    </label>
-                    <label>Hit Dice:
-                        <input type="number" id="hit-dice" name="hit-dice">
-                    </label>
-                    <label>Death Saves:
-                        <input type="number" id="death-saves" name="death-saves">
-                    </label>
+                        <label>Temporary HP:
+                            <input type="number" id="temp-hp" name="temp-hp">
+                        </label>
+                    </div>
+                    
+
+                    <div class="inline">
+                        <label>Initiative:
+                            <div id="initiative">+0</div>
+                        </label>
+
+                        <label>Inspiration:
+                            <select id="inspiration-selector"></select>
+                        </label>
+
+                        <label>Speed:
+                            <input type="number" id="speed" name="speed">
+                        </label>
+
+                        <label>Armor Class:
+                            <input type="number" id="armor-class" name="armor-class">
+                        </label>
+                    </div>
+                    
+                    <div class="inline">
+                        <label>Hit Dice:</label>
+                        <dev id="hit-dice" class="inline" style-margin="dashed"> </dev>
+
+                        <div>
+                        <h3 class="collapsible">Death Saves:</h3>
+                            <div class="collapsible-content">
+                                <div>
+                                <label>Sucesses</label>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="checkbox">
+                                        <input type="checkbox">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label>Failures</label>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="checkbox">
+                                        <input type="checkbox">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ 
                     <label>Attacks & Spellcasting:</label>
                     <textarea id="attacks" name="attacks" rows="5" placeholder="List attacks, spells, and bonuses..."></textarea>
+                </div>
+            </section>
+            
+            <section>
+                <h2 class="collapsible">Features</h2>
+                <div class="collapsible-content">
                 </div>
             </section>
 
             <section>
                 <h2 class="collapsible">Equipment</h2>
                 <div class="collapsible-content">
-                    <label>Equipment:</label>
+                    <h3>Currency:</h3>
+                    <div class="inline">
+                        <label>PP:</label>
+                        <input type="number">
+
+                        <label>GP:</label>
+                        <input type="number">
+
+                        <label>EP:</label>
+                        <input type="number">
+
+                        <label>SP:</label>
+                        <input type="number">
+
+                        <label>CP:</label>
+                        <input type="number">
+
+                    </div>
+                    <h3>Equipment:</h3>
                     <textarea id="equipment" name="equipment" rows="5" placeholder="List all equipment..."></textarea>
 
-                    <label>Coins:</label>
+                    <h3>Treasure:</h3>
+                    <textarea id="treasure" name="treasure" rows="5" placeholder="List all treasures..."></textarea>
+                    
                 </div>
             </section>
 
             <section>
                 <h2 class="collapsible">Traits & Backstory</h2>
                 <div class="collapsible-content">
-                    <label>Character Apperance:</label>
-                    <img>
+                    <h3>Character Apperance:</h3>
+                    <img src="template1_preview.png" height="500px", width="300px">
 
-                    <label>Hair:</label>
-                    <textarea></textarea>
+                    <div class="inline">
+                         <label>Age:</label>
+                        <textarea id="age"></textarea>
+    
+                        <label>Height:</label>
+                        <textarea id="height"></textarea>
+                        
+                        <label>Weight:</label>
+                        <textarea id="weight"></textarea>
+                    </div>
 
-                    <label>Age:</label>
-                    <textarea></textarea>
+                    <div class="inline">
+                        <label>Eyes:</label>
+                        <textarea id="eyes"></textarea>
+    
+                        <label>Skin:</label>
+                        <textarea id="skin"></textarea>
 
-                    <label>Height:</label>
-                    <textarea></textarea>
+                        <label>Hair:</label>
+                        <textarea id="hair"></textarea>
+                    </div>
+
+
                     
-                    <label>Weight:</label>
-                    <textarea></textarea>
-                    
-                    <label>Eyes:</label>
-                    <textarea></textarea>
-
-                    <label>Skin:</label>
-                    <textarea></textarea>
-
-                    <label>Hair:</label>
-                    <textarea></textarea>
 
 
                     <label>Personality Traits:</label>
-                    <textarea id="traits" name="traits" rows="3"></textarea>
+                    <textarea id="personality-traits" name="personality-traits" rows="3"></textarea>
 
                     <label>Ideals:</label>
                     <textarea id="ideals" name="ideals" rows="3"></textarea>
@@ -214,23 +249,27 @@
                     <label>Flaws:</label>
                     <textarea id="flaws" name="flaws" rows="3"></textarea>
 
-                    <label>Backstory:</label>
+                    <h3>Backstory:</h3>
                     <textarea id="backstory" name="backstory" rows="5"></textarea>
                 </div>
             </section>
 
             <div id="button_container">
-                <button type="button" id="save-button">Save Character</button>
+                <button type="button" id="open-file">Load Character</button>
+                <button type="button" id="save-file">Save Character</button>
                 <button type="button" id="generate-pdf">Generate PDF</button>
+                <div> <!-- <div id="image-selector-container"> -->
+                    <img id="current-template" src= "template1_preview.png">
+                    <div id="template-selector"></div>
+                </div>
             </div>
         </form>
-
+        
         <div id="image-selector-container">
             <img id="current-image" src= "https://color-hex.org/colors/f4f4f4.png", alt="Current Background">
-            <div id="image-selector">
-            </div>
+            <div id="image-selector"></div>
         </div>
     </main>
-
+  </script>
 </body>
 </html>

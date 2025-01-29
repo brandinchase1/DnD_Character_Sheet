@@ -1,0 +1,18 @@
+death saves
+equipment pouches
+advantage/disadvantage
+add labels to skills
+levels of exhaustion
+passive skills
+allies/organizations?
+spellcasting
+fix rotating dropdowns
+fix hitdice
+
+change saved pdf to character name?
+
+generate pdf
+save and load (multiple platforms)
+overrides
+adapt to mobile
+overall cleanup

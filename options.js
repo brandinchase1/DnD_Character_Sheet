@@ -45,23 +45,23 @@ const dndBackgrounds = [
     "Waterdhavian Noble"
   ];
 
-  const dndClasses = [
-    "",
-    "Artificer",
-    "Barbarian",
-    "Bard",
-    "Blood Hunter",
-    "Cleric",
-    "Druid",
-    "Fighter",
-    "Monk",
-    "Paladin",
-    "Ranger",
-    "Rogue",
-    "Sorcerer",
-    "Warlock",
-    "Wizard"
-  ];
+const dndClasses = {
+  "": null, // Empty entry for no class
+  "Artificer": "d8",
+  "Barbarian": "d12",
+  "Bard": "d8",
+  "Blood Hunter": "d10", // Assuming based on homebrew rules
+  "Cleric": "d8",
+  "Druid": "d8",
+  "Fighter": "d10",
+  "Monk": "d8",
+  "Paladin": "d10",
+  "Ranger": "d10",
+  "Rogue": "d8",
+  "Sorcerer": "d6",
+  "Warlock": "d8",
+  "Wizard": "d6"
+};
   
   const dndSpecies = [
     "",
@@ -130,6 +130,15 @@ const dndBackgrounds = [
     "https://img.freepik.com/premium-photo/seamless-pink-floral-pattern-with-elegant-vines-flowers_1304147-182723.jpg"
   ]
 
+  const inspiration = [
+    "", 
+    "Advantage", 
+    "d6",
+    "d8",
+    "d10",
+    "d12",
+  ]
+
   function fillSelector(options, selector) {
     options.forEach(option => {
         const opt = document.createElement('option');
@@ -140,10 +149,11 @@ const dndBackgrounds = [
     });
   }
 
-  fillSelector(dndClasses, document.getElementById("class-selector"))
+  fillSelector(Object.keys(dndClasses), document.getElementById("class-selector"))
   fillSelector(dndSpecies, document.getElementById("species-selector"))
   fillSelector(dndAlignments, document.getElementById("alignment-selector"))
   fillSelector(dndBackgrounds, document.getElementById("background-selector"))
+  fillSelector(inspiration, document.getElementById("inspiration-selector"))
 
   backgroundImages.forEach(imgSrc => {
     const pic = document.createElement('img');
