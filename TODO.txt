@@ -2,12 +2,12 @@ death saves
 equipment pouches
 advantage/disadvantage
 add labels to skills
-levels of exhaustion
 passive skills
 allies/organizations?
 spellcasting
-fix rotating dropdowns
 fix hitdice
+ki/rage/point system
+exhaustion effects
 
 change saved pdf to character name?
 

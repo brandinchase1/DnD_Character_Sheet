@@ -76,8 +76,22 @@
 
                         <h3>Skills</h3>
                         <div class="skills-grid" id="skills-grid">
-                            <!-- Skill boxes will be dynamically populated -->
+                            <div class="skill-box" style="display: flex;">
+                                <span style="flex: 1 1 0%;">Skill (Ability)</span>
+                                <span style="flex: 1 1 0%;">Prof.</span>
+                                <span style="flex: 1 1 0%;">Adv/Dis</span>
+                                <span style="flex: 1 1 0%;">Mod.</span>
+                                <!-- <span id="Acrobatics-mod">+0</span> -->
                             </div>
+                            <div class="skill-box" style="display: flex;">
+                                <span style="flex: 1 1 0%;">Skill (Ability)</span>
+                                <span style="flex: 1 1 0%;">Prof.</span>
+                                <span style="flex: 1 1 0%;">Adv/Dis</span>
+                                <span style="flex: 1 1 0%;">Mod.</span>
+                                <!-- <span id="Acrobatics-mod">+0</span> -->
+                            </div>
+                            <!-- Skill boxes will be dynamically populated -->
+                        </div>
                     </div>
             </section>
 
@@ -163,6 +177,10 @@
                             </div>
                         </div>
                     </div>
+
+                    <label>Exhaustion:
+                        <select id="exhaustion-selector"></select>
+                    </label>
  
                     <label>Attacks & Spellcasting:</label>
                     <textarea id="attacks" name="attacks" rows="5" placeholder="List attacks, spells, and bonuses..."></textarea>

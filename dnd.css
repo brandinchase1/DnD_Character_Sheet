@@ -5,6 +5,10 @@ body {
     padding: 0;
 }
 
+html {
+    overflow-y: scroll; /* Always show vertical scrollbar */
+}
+
 header {
     background-color: #333;
     color: white;
@@ -36,27 +40,30 @@ h2.collapsible {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 h2.collapsible::after {
-    content: '\25BC';
+    content: '\25B6';
     font-size: 0.8rem;
-    transform: rotate(-90deg);
+    display: inline-block;
     transition: transform 0.2s ease;
 }
 
 h2.collapsible.collapsed::after {
-    transform: rotate(0deg);
+    transform: rotate(90deg);
 }
 
 .collapsible-content {
-    display: none;
+    max-height: 0;
     overflow: hidden;
-    transition: max-height 0.2s ease;
+    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    padding: 0; /* Ensures no padding when collapsed */
 }
 
 .collapsible-content.expanded {
-    display: block;
+    max-height: 500px; /* Set a value large enough for your content */
+    padding: 10px; /* Adjust padding when expanded */
 }
 
 .pill-container {

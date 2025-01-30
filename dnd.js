@@ -265,55 +265,79 @@ function updateSkillModifiers() {
 function makeSkillModifiers() {
     const proficiencyBonus = parseInt(document.getElementById('proficiency-bonus').innerText) || 0;
     const skillsGrid = document.getElementById("skills-grid");
-    skillsGrid.innerHTML = "";
 
     skills.forEach((skill, index) => {
         const modifier = abilityModifiers[skill.ability];
         const proficiencyModifier = skill.proficient * proficiencyBonus;
         const totalModifier = modifier + proficiencyModifier;
+        const passiveScore = 10 + totalModifier; // Passive skill score formula
 
         const skillBox = document.createElement("div");
         skillBox.className = "skill-box";
-        skillBox.style.display = "flex"; // Use flexbox for alignment
+        skillBox.style.display = "flex";
+        skillBox.style.position = "relative"; // Needed for absolute positioning of passive score
+
+        // Passive score element (hidden by default)
+        const passiveText = document.createElement("div");
+        passiveText.className = "passive-score";
+        passiveText.textContent = `Passive: ${passiveScore}`;
+        passiveText.style.position = "absolute";
+        passiveText.style.bottom = "100%"; // Position above the skillBox
+        passiveText.style.left = "50%";
+        passiveText.style.transform = "translateX(-50%)";
+        passiveText.style.padding = "5px";
+        passiveText.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        passiveText.style.color = "white";
+        passiveText.style.borderRadius = "5px";
+        passiveText.style.fontSize = "12px";
+        passiveText.style.display = "none"; // Hide initially
 
         const skillName = document.createElement("span");
         skillName.textContent = `${skill.name} (${skill.ability.substring(0, 3).toUpperCase()})`;
-        skillName.style.flex = 1; // Ensure the name takes the remaining space
+        skillName.style.flex = 1;
 
-        const checkbox = createTwoClickCheckbox(skill);
+        const checkbox1 = createTwoClickCheckbox(skill);
+        const checkbox2 = createTwoClickCheckbox(skill);
+
         const modText = document.createElement("span");
-        modText.id = `${skill.name}-mod`
+        modText.id = `${skill.name}-mod`;
+        modText.textContent = `${totalModifier >= 0 ? "+" : ""}${totalModifier}`;
 
-        // Append elements in the correct order: name, checkbox, modifier
+        // Hover event listeners to show/hide passive score
+        skillBox.addEventListener("mouseenter", () => {
+            passiveText.style.display = "block";
+        });
+
+        skillBox.addEventListener("mouseleave", () => {
+            passiveText.style.display = "none";
+        });
+
+        // Append elements in the correct order
+        skillBox.appendChild(passiveText);
         skillBox.appendChild(skillName);
-        skillBox.appendChild(checkbox);
+        skillBox.appendChild(checkbox1);
+        skillBox.appendChild(checkbox2);
         skillBox.appendChild(modText);
         skillsGrid.appendChild(skillBox);
     });
-    updateSkillModifiers()
-}
 
+    updateSkillModifiers();
+}
 ///////////////////////////////
 
 document.querySelectorAll(".collapsible").forEach(header => {
     header.addEventListener("click", () => {
         header.classList.toggle("collapsed");
         const content = header.nextElementSibling;
+
         if (content.classList.contains("collapsible-content")) {
-            content.classList.toggle("collapsed");
-        }
-    });
-});
-
-
-
-
-document.querySelectorAll(".collapsible").forEach(header => {
-    header.addEventListener("click", () => {
-        header.classList.toggle("collapsed");
-        const content = header.nextElementSibling;
-        if (content.classList.contains("collapsible-content")) {
-            content.classList.toggle("expanded");
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null; // Collapse
+                content.style.padding = "0"; 
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px"; // Expand smoothly
+                content.style.padding = "10px"; 
+            }
         }
     });
 });

@@ -139,6 +139,16 @@ const dndClasses = {
     "d12",
   ]
 
+  const exhaustion = [
+    "", 
+    "1 - Disadvantage on Ability Checks", 
+    "2 - Speed Halved",
+    "3 - Disadvantage on Attack Rolls and Saving Throws",
+    "4 - Hit Point Maximum Halved",
+    "5 - Speed Reduced to 0",
+    "6 - Death",
+  ]
+
   function fillSelector(options, selector) {
     options.forEach(option => {
         const opt = document.createElement('option');
@@ -154,6 +164,7 @@ const dndClasses = {
   fillSelector(dndAlignments, document.getElementById("alignment-selector"))
   fillSelector(dndBackgrounds, document.getElementById("background-selector"))
   fillSelector(inspiration, document.getElementById("inspiration-selector"))
+  fillSelector(exhaustion, document.getElementById("exhaustion-selector"))
 
   backgroundImages.forEach(imgSrc => {
     const pic = document.createElement('img');
