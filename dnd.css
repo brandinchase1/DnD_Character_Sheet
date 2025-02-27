@@ -18,11 +18,17 @@ header {
 
 main {
     max-width: 900px;
+    width: 80%;
     margin: 20px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    align-self: center;
+}
+
+#character-form {
+    justify-self: center;
 }
 
 h1, h2, h3 {
@@ -62,7 +68,7 @@ h2.collapsible.collapsed::after {
 }
 
 .collapsible-content.expanded {
-    max-height: 500px; /* Set a value large enough for your content */
+    max-height: 100%; /* Set a value large enough for your content */
     padding: 10px; /* Adjust padding when expanded */
 }
 
@@ -143,12 +149,6 @@ button:hover {
     margin-top: 20px;
 }
 
-.skills-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-
 .ability-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -180,14 +180,37 @@ button:hover {
 }
 
 .ability-score {
-    width: 50px;
+    width: 90%  !important;
     text-align: center;
     margin-top: 5px;
 }
 
+/**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    /* display: flex;
+    flex-wrap: wrap; */
+}
+
+.passive-score {
+    position: absolute;
+    bottom: 100%; /* Position above the skillBox */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 5px;
+    font-size: 12px;
+    display: none; /* Hide initially */
+}
 
 .skill-box {
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: space-between;
     border: 1px solid #ddd;
@@ -196,31 +219,34 @@ button:hover {
     background: #f9f9f9;
 }
 
+.inner-skill-box {
+    display: flex;
+    position: relative;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
 .skill-box span {
     padding-right: 5px;
+    width: 40%;
 }
 
 .skill-box input {
-    margin: 0 100px 0 10px; /* Adjust the space between the checkbox and the modifier */
+    width: 30%;
 }
 
 .skill-box label {
-    margin-left: 5px;
+    width: 30%;
+    justify-content: end;
+    justify-self: end;
+    text-align: center;
 }
 
-#characters {
-    list-style: none;
-    padding: 0;
-}
-
-#characters li {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-}
-
+/**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 .inline {
     display: flex;
     gap: 10px;
@@ -309,11 +335,6 @@ textarea {
 }
 
 
-#hit-dice {
-    outline:  black;
-    outline-style: solid;
-}
-
 #templateSelection {
     display: flex;
     justify-content: center;
@@ -328,4 +349,272 @@ textarea {
 }
 #templateSelection img.selected {
     border: 3px solid blue;
+}
+
+/* 
+#characters {
+    list-style: none;
+    padding: 0;
+}
+
+#characters li {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+} */
+
+/**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
+
+.inventory-container {
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+    background: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    max-width: 500px; /* Adjust as needed */
+    /* height: 400px; Adjust as needed */
+    overflow: auto; /* Adds scrollbars if content overflows */
+    gap: 10px;
+}
+
+.container-pills {
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 5px;
+    margin-bottom: 10px;
+    width: 95%;
+    overflow: auto; /* Adds scrollbars if content overflows */
+    overflow-x: auto;
+    /* max-width: 100%; */
+}
+
+.container {
+    background-color: #ddd;
+    border-radius: 20px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.container span {
+    font-size: 0.9rem;
+}
+
+.container button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: red;
+    cursor: pointer;
+}
+
+.item-list {
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    /* border-top: 1px solid #ccc;
+    padding-top: 10px; */
+
+    flex-grow: 1; /* Allows it to expand but not overflow */
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.controls {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+
+
+
+
+.resizable-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.resizable-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.resizer {
+    width: 10px;
+    height: 10px;
+    background: red;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: nwse-resize;
+}
+
+
+/**//**//**//**//**//**//**//**/
+
+.weapon-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 2px solid #555;
+    padding: 10px;
+    width: 100%;
+}
+.weapon {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: solid;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    position: relative;
+}
+.weapon:hover .tooltip {
+    display: block;
+}
+.tooltip {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 5px;
+    border: thick;
+    border-color: black;
+    border-radius: 5px;
+    top: 100%;
+    left: 0;
+    width: 250px;
+    z-index: 1;
+}
+
+.weapon select, .weapon input {
+    background: white;   
+    border: 1px solid #555;
+    padding: 5px;
+}
+
+#weaponName {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #555;
+    background: #333;
+    color: white;
+}
+#suggestions {
+    position: absolute;
+    width: 100%;
+    background: #444;
+    border: 1px solid #555;
+    display: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+}
+.suggestion {
+    padding: 8px;
+    cursor: pointer;
+}
+.suggestion:hover {
+    background: #666;
+}
+
+/**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
+
+#spellListContainer {
+    width: 100%;
+    justify-self: center;
+    height: 400px; /* Example fixed height */
+    border: 1px solid black;
+    overflow-y: scroll; /* Makes it scrollable */
+    padding: 10px;
+}
+
+#spellList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#spellList li {
+    margin: 5px 0;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    border: 1px solid black;
+}
+
+#spellList li:hover {
+    background-color: #e6e6e6;
+}
+
+/* Modal styles */
+#spellDetailsModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.hidden {
+    display: none;
+}
+
+#spellDetailsContent {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%;
+    border: 1px solid black;
+    position: relative;
+}
+
+#closeDetails {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+
+.spell {
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px;
+    gap: 15px;
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
+}
+
+.spell > * {
+     padding: 2px;
+    align-self: center;
+}
+
+.spell > input {
+    width: 20px;
+    height: 20px;
+    justify-self: center;
 }

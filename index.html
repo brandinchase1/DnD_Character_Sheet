@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.0.4/fuse.min.js"></script> <!--search engin-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script> <!--csv parser-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script> <!--pdf tool-->
     <script src="options.js" defer></script>
+    <script src="attacks.js" defer></script>
     <script src="sheet1_template.js" defer></script>
     <script src="sheet2_template.js" defer></script>
+    <script src="inventory.js" defer></script>
+    <script src="spells.js" defer></script>
     <script src="dnd.js" defer></script>
     <script src="save_file.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <title>D&D Character Sheet Creator</title>
     <link rel="stylesheet" href="dnd.css">
 </head>
@@ -77,42 +82,18 @@
                         <h3>Skills</h3>
                         <div class="skills-grid" id="skills-grid">
                             <div class="skill-box" style="display: flex;">
-                                <span style="flex: 1 1 0%;">Skill (Ability)</span>
-                                <span style="flex: 1 1 0%;">Prof.</span>
-                                <span style="flex: 1 1 0%;">Adv/Dis</span>
-                                <span style="flex: 1 1 0%;">Mod.</span>
-                                <!-- <span id="Acrobatics-mod">+0</span> -->
+                                <span> <b>Skill (Ability)</b></span>
+                                <label><b>Proficiency</b></label>
+                                <label><b>Modifier</b></label>
                             </div>
                             <div class="skill-box" style="display: flex;">
-                                <span style="flex: 1 1 0%;">Skill (Ability)</span>
-                                <span style="flex: 1 1 0%;">Prof.</span>
-                                <span style="flex: 1 1 0%;">Adv/Dis</span>
-                                <span style="flex: 1 1 0%;">Mod.</span>
-                                <!-- <span id="Acrobatics-mod">+0</span> -->
+                                <span> <b>Skill (Ability)</b></span>
+                                <label><b>Proficiency</b></label>
+                                <label><b>Modifier</b></label>
                             </div>
                             <!-- Skill boxes will be dynamically populated -->
                         </div>
                     </div>
-            </section>
-
-            <section>
-                <h2 class="collapsible">Proficiencies</h2>
-                <div class="collapsible-content">
-                    <label>Armor:</label>
-                    <textarea placeholder="List armor proficiencies..."></textarea>
-
-                    <label>Weapons:</label>
-                    <textarea placeholder="List weapon proficiencies..."></textarea>
-
-                    <label>Tools:</label>
-                    <textarea placeholder="List tool proficiencies..."></textarea>
-
-                    <label>Languages:</label>
-                    <textarea placeholder="List language proficiencies..."></textarea>
-                    
-                    <label>Other:</label>
-                    <textarea placeholder="List other proficiencies..."></textarea>
-                </div>
             </section>
 
             <section>
@@ -135,7 +116,7 @@
 
                     <div class="inline">
                         <label>Initiative:
-                            <div id="initiative">+0</div>
+                            <input type="number" id="initiative" default-value="0" value="0" readonly>
                         </label>
 
                         <label>Inspiration:
@@ -143,7 +124,7 @@
                         </label>
 
                         <label>Speed:
-                            <input type="number" id="speed" name="speed">
+                            <input type="number" id="speed" name="speed" min="0" value="0">
                         </label>
 
                         <label>Armor Class:
@@ -151,10 +132,11 @@
                         </label>
                     </div>
                     
-                    <div class="inline">
+                    <div>
+                        <div>
                         <label>Hit Dice:</label>
-                        <dev id="hit-dice" class="inline" style-margin="dashed"> </dev>
-
+                            <div id="hit-dice" class="inline" style-margin="dashed"> </div>
+                        </div>
                         <div>
                         <h3 class="collapsible">Death Saves:</h3>
                             <div class="collapsible-content">
@@ -182,11 +164,111 @@
                         <select id="exhaustion-selector"></select>
                     </label>
  
-                    <label>Attacks & Spellcasting:</label>
-                    <textarea id="attacks" name="attacks" rows="5" placeholder="List attacks, spells, and bonuses..."></textarea>
+                    <label>Attacks:</label>
+                    <div id="weapon-container">
+                        <div class="weapon-list" id="weapon-list">
+                            <div class="weapon-controls">
+                                <div class="inline">
+                                    <input type="text" id="weaponName" placeholder="Weapon Name" oninput="searchWeapons()">
+                                    <button onclick="addWeapon()">Add Weapon</button>
+                                </div>
+                                <div id="suggestions"></div>
+                            <!-- Weapons will be added here -->
+                        </div>
+                    </div>
                 </div>
             </section>
             
+            <section>
+                <h2 class="collapsible">Spellcasting</h2>
+                <div class="collapsible-content">
+                    <div class="inline">
+                        <label>Spellcasting Ability:
+                            <select id="spellcasting-ability-selector" name="spellcasting-ability"></select>
+                        </label>
+
+                        <label>Spell Save DC:
+                            <input type="number" id="spell-save-dc" name="spell-save-dc">
+                        </label>
+
+                        <label>Spellcasting Modifer:
+                            <input type="number" id="spellcasting-modifer" name="spellcasting-modifer">
+                        </label>
+                    </div>
+                    
+                    <div id="spell_slots_container" class="inline">
+                        <!-- The list will be populated by JavaScript -->
+                        <div class="spell_slot_pill" id="spell_slot_1">
+                            <label class="spell_slot_label">1st</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_1" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_2">
+                            <label class="spell_slot_label">2nd</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_2" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_3">
+                            <label class="spell_slot_label">3rd</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_3" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_4">
+                            <label class="spell_slot_label">4th</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_4" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_5">
+                            <label class="spell_slot_label">5th</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_5" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_6">
+                            <label class="spell_slot_label">6th</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_6" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_7">
+                            <label class="spell_slot_label">7th</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_7" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_8">
+                            <label class="spell_slot_label">8th</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_8" value="-">
+                        </div>
+                        <div class="spell_slot_pill" id="spell_slot_9">
+                            <label class="spell_slot_label">9th</label>
+                            <input type="text" class="spell_slot_value" id="spell_slot_value_9" value="-">
+                        </div>
+                    </div>
+
+                    <!-- Spells list container -->
+                    <div class="spell header" style="background-color: grey; color: white">
+                        <div data-sort="Prepared">Prepared</div>
+                        <div class="spell-name" data-sort="Name">Name &#x25BC;</div> <!-- &#x25BC; -->
+                        <div class="spell-time" data-sort="Casting Time">Casting Time</div>
+                        <div class="spell-range" data-sort="Range">Range</div>
+                        <div class="spell-level" data-sort="Level">Level</div>
+                        <div class="spell-duration" data-sort="Duration">Duration</div>
+                    </div>
+                    <div id="spellListContainer">
+                        <!-- The list will be populated by JavaScript -->
+                        <ul id="spellList"></ul>
+                    </div>
+
+                    <!-- Hidden details area or modal -->
+                    <div id="spellDetailsModal" class="hidden">
+                        <div id="spellDetailsContent">
+                        <button id="closeDetails">&times;</button>
+                        <h2 id="spellName"></h2>
+                        <p><strong>Level:</strong> <span id="spellLevel"></span></p>
+                        <p><strong>Casting Time:</strong> <span id="spellCastingTime"></span></p>
+                        <p><strong>Range:</strong> <span id="spellRange"></span></p>
+                        <p><strong>Duration:</strong> <span id="spellDuration"></span></p>
+                        <p><strong>School:</strong> <span id="spellSchool"></span></p>
+                        <p><strong>Components:</strong> <span id="spellComponents"></span></p>
+                        <p id="spellText"></p>
+                        <p id="spellAtHigherLevels"></p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
             <section>
                 <h2 class="collapsible">Features</h2>
                 <div class="collapsible-content">
@@ -199,23 +281,33 @@
                     <h3>Currency:</h3>
                     <div class="inline">
                         <label>PP:</label>
-                        <input type="number">
+                        <input type="number" value="0">
 
                         <label>GP:</label>
-                        <input type="number">
+                        <input type="number" value="0">
 
                         <label>EP:</label>
-                        <input type="number">
+                        <input type="number" value="0">
 
                         <label>SP:</label>
-                        <input type="number">
+                        <input type="number" value="0">
 
                         <label>CP:</label>
-                        <input type="number">
+                        <input type="number" value="0">
 
                     </div>
                     <h3>Equipment:</h3>
-                    <textarea id="equipment" name="equipment" rows="5" placeholder="List all equipment..."></textarea>
+                    <div class="inventory-container">
+                        <div class="inline" style="width:100%">
+                            <button onclick="addContainer()">Add Container</button>
+                            <div class="container-pills" id="container-pills"></div>
+                        </div>
+                        <div class="item-list" id="item-list"></div>
+                        <div class="controls">
+                            <input type="text" id="item-name" placeholder="Item Name">
+                            <button onclick="addItem()">Add Item</button>
+                        </div>
+                    </div>
 
                     <h3>Treasure:</h3>
                     <textarea id="treasure" name="treasure" rows="5" placeholder="List all treasures..."></textarea>
@@ -224,10 +316,34 @@
             </section>
 
             <section>
+                <h2 class="collapsible">Proficiencies</h2>
+                <div class="collapsible-content">
+                    <label>Armor:</label>
+                    <textarea placeholder="List armor proficiencies..."></textarea>
+
+                    <label>Weapons:</label>
+                    <textarea placeholder="List weapon proficiencies..."></textarea>
+
+                    <label>Tools:</label>
+                    <textarea placeholder="List tool proficiencies..."></textarea>
+
+                    <label>Languages:</label>
+                    <textarea placeholder="List language proficiencies..."></textarea>
+                    
+                    <label>Other:</label>
+                    <textarea placeholder="List other proficiencies..."></textarea>
+                </div>
+            </section>
+
+            <section>
                 <h2 class="collapsible">Traits & Backstory</h2>
                 <div class="collapsible-content">
                     <h3>Character Apperance:</h3>
-                    <img src="template1_preview.png" height="500px", width="300px">
+                    
+                    <div class="resizable-image-container">
+                        <img id="character-image" class="resizable-image" src="template1_preview.png" alt="Example">
+                        <div id="resizer" class="resizer"></div>
+                    </div>
 
                     <div class="inline">
                          <label>Age:</label>
@@ -267,6 +383,9 @@
                     <label>Flaws:</label>
                     <textarea id="flaws" name="flaws" rows="3"></textarea>
 
+                    <label>Allies and Organizations:</label>
+                    <textarea id="allies" name="allies" rows="3"></textarea>
+
                     <h3>Backstory:</h3>
                     <textarea id="backstory" name="backstory" rows="5"></textarea>
                 </div>
@@ -276,6 +395,8 @@
                 <button type="button" id="open-file">Load Character</button>
                 <button type="button" id="save-file">Save Character</button>
                 <button type="button" id="generate-pdf">Generate PDF</button>
+
+
                 <div> <!-- <div id="image-selector-container"> -->
                     <img id="current-template" src= "template1_preview.png">
                     <div id="template-selector"></div>

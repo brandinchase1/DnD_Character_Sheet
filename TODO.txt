@@ -1,18 +1,15 @@
-death saves
 equipment pouches
-advantage/disadvantage
-add labels to skills
-passive skills
-allies/organizations?
 spellcasting
-fix hitdice
-ki/rage/point system
+ki/rage/point system (generic as well)
+animal companion
+senses (darkvision)
 exhaustion effects
+fix pdf templates
+darkmode
 
-change saved pdf to character name?
-
+add backup search engine (remove dependecies)?
 generate pdf
 save and load (multiple platforms)
 overrides
 adapt to mobile
-overall cleanup
+overall cleanup 

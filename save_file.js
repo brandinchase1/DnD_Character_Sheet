@@ -24,10 +24,23 @@ async function openFile() {
 /////////////////// Save file
 
 async function saveFile() {
+
+    // function savePage() {
+    //     const htmlContent = document.documentElement.outerHTML; // Capture the entire page
+    //     const blob = new Blob([htmlContent], { type: "text/html" });
+    //     const a = document.createElement("a");
+    //     a.href = URL.createObjectURL(blob);
+    //     a.download = "saved_page.html";
+    //     document.body.appendChild(a);
+    //     a.click();
+    //     document.body.removeChild(a);
+    // }
+
+
     if (!fileHandle) {
         // Prompt the user to create a new file
         fileHandle = await window.showSaveFilePicker({
-            suggestedName: "character.txt",
+            suggestedName: `${document.getElementById("character-name").value || "character"}.txt`,
             types: [
                 {
                     description: "Text Files",
